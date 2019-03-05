@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  * {
+    margin-bottom: 1rem;
+  }
+
+  &__label {
+
+  }
+
+  &__input {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid blue;
+  }
+
+  &__submit {
+    font-size: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "project-1-1819",
+  "version": "1.0.0",
+  "description": "Een SPA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeroentvb/project-1-1819.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeroentvb/project-1-1819/issues"
+  },
+  "homepage": "https://github.com/jeroentvb/project-1-1819#readme",
+  "dependencies": {
+    "oba-wrapper": "github:maanlamp/OBA-wrapper"
+  }
+}
