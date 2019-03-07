@@ -109,7 +109,7 @@ function detail (data) {
     div2
   ])
 
-  // console.log(data.search)
+  console.log(data.search)
 
   element.update(document.body, [
     header,
