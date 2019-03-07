@@ -1,6 +1,6 @@
-/* global routie, localStorage */
+/* global routie, localStorage, API */
 
-import { API } from '../../node_modules/oba-wrapper/js/index.js'
+// import { API } from '../../node_modules/oba-wrapper/js/index.js'
 import { render } from './modules/render.js'
 
 const api = new API({
