@@ -1,0 +1,68 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__img {
+    position: absolute;
+    top: 25%;
+    overflow: visible;
+    // // margin: 0 auto;
+    // // align-self: center;
+    width: 75%;
+  }
+}
+
+@keyframes loading1 {
+  0% {
+    transform: translateY(0rem);
+  }
+  35% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0rem);
+  }
+}
+
+@keyframes loading2 {
+  0% {
+    transform: translateY(0rem);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0rem);
+  }
+}
+
+@keyframes loading3 {
+  0% {
+    transform: translateY(0rem);
+  }
+  65% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0rem);
+  }
+}
+
+@mixin loading($animation) {
+  animation: $animation 2s infinite ease-in-out forwards;
+}
+
+.l-1 {
+  // animation: loading2 2s infinite linear forwards;
+  @include loading(loading2);
+}
+
+.l-2 {
+  // animation: loading1 2s infinite linear forwards;
+  @include loading(loading1);
+}
+
+.l-3 {
+  // animation: loading3 2s infinite linear forwards;
+  @include loading(loading3);
+}

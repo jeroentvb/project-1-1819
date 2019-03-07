@@ -7,19 +7,24 @@
   }
 
   &__label {
-
+    font-size: 1.4rem;
+    // text-align: center;
   }
 
   &__input {
     font-size: 1rem;
-    padding: 0.6rem 1rem;
-    border: 1px solid blue;
+    padding: 1.5rem 2rem;
+    border: none;
+    background-color: #dfdad5;
+    margin-bottom: 2rem;
   }
 
   &__submit {
     font-size: 1rem;
     padding: 1rem;
-    border: 1px solid black;
-    background-color: transparent;
+    &:hover {
+      background-color: #dfdad5;
+      cursor: pointer;
+    }
   }
 }
