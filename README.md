@@ -6,7 +6,7 @@ Het project vindt plaats bij de Centrale OBA. Maandagochtend is om 10.00 uur de 
 
 We verzamelen maandagochtend om 09.45 op de 1e verdieping van de Centrale OBA, [Oosterdokskade 143](https://www.google.com/maps/place/OBA+library+of+Amsterdam/@52.3756983,4.9082087,15z/data=!4m2!3m1!1s0x0:0x6b97f693e6ecb494?ved=2ahUKEwioo6OrzubgAhWLNOwKHR6KDQgQ_BIwCnoECAYQCA). -->
 
-![Screenshot](src/images/app-screenshot.png)
+![Screenshot](src/images/app-screenshot.jpg)
 
 ## Demo
 [Demo](https://jeroenvanberkum.nl/project-1-1819/)
