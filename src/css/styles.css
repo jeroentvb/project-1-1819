@@ -35,6 +35,12 @@ header h1 {
   margin-top: 25vh;
 }
 
+.section__book-info {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+}
+
 .button {
   background-color: transparent;
   color: #48656d;
@@ -44,10 +50,19 @@ header h1 {
   text-decoration: none;
   padding: 0.5rem 1rem;
   display: inline-block;
-  margin-bottom: 1rem;
+  min-width: 8rem;
+  text-align: center;
 }
 .button:hover {
   background-color: #dfdad5;
+}
+
+.cover {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  height: auto;
+  min-width: 150px;
 }
 
 .row {
@@ -56,12 +71,25 @@ header h1 {
   align-items: center;
 }
 .row h3 {
-  min-width: 5rem;
+  min-width: 10rem;
 }
 .row h3, .row p {
   margin: 0.5rem 0;
 }
 
+@media (min-width: 600px) {
+  .section__book-info {
+    flex-direction: row;
+  }
+
+  .cover {
+    width: inherit;
+  }
+
+  .button {
+    margin-bottom: 1rem;
+  }
+}
 .form {
   display: flex;
   flex-direction: column;
@@ -147,6 +175,12 @@ header h1 {
 
 .l-3 {
   animation: loading3 2s infinite ease-in-out forwards;
+}
+
+@media (min-width: 900px) {
+  .loader__img {
+    width: 50%;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

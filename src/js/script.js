@@ -1,6 +1,6 @@
 /* global routie, localStorage, API */
 
-// import { API } from '../../node_modules/oba-wrapper/js/index.js'
+import { API } from './modules/oba-wrapper/js/index.js'
 import { render } from './modules/render.js'
 
 const api = new API({
@@ -10,6 +10,7 @@ const api = new API({
 routie({
   'home': () => home(),
   'info/:frabl': frabl => detail(frabl),
+  'locatie/:name': name => locatie(name),
   '*': () => home()
 })
 
@@ -76,4 +77,10 @@ async function detail (frabl) {
   } else {
     render.detail(dataset)
   }
+}
+
+function locatie (name) {
+  const dataset = JSON.parse(localStorage.getItem('dataset'))
+
+  render.locatie(name, dataset)
 }

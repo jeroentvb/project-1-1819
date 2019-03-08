@@ -5,3 +5,4 @@
 *.zip
 *.eps
 plattegronden/*
+node_modules/*

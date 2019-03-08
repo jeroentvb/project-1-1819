@@ -66,3 +66,9 @@
   // animation: loading3 2s infinite linear forwards;
   @include loading(loading3);
 }
+
+@media (min-width: 900px) {
+  .loader__img {
+    width: 40%;
+  }
+}

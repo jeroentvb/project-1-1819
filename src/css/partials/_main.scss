@@ -4,6 +4,14 @@
   }
 }
 
+.section {
+  &__book-info {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+  }
+}
+
 .button {
   background-color: transparent;
   color: #48656d;
@@ -13,10 +21,19 @@
   text-decoration: none;
   padding: .5rem 1rem;
   display: inline-block;
-  margin-bottom: 1rem;
+  min-width: 8rem;
+  text-align: center;
   &:hover {
     background-color: #dfdad5;
   }
+}
+
+.cover {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  height: auto;
+  min-width: 150px;
 }
 
 .row {
@@ -25,10 +42,26 @@
   align-items: center;
 
   h3 {
-    min-width: 5rem;
+    min-width: 10rem;
   }
 
   h3, p {
     margin: .5rem 0;
+  }
+}
+
+@media (min-width: 600px) {
+  .section {
+    &__book-info {
+      flex-direction: row;
+    }
+  }
+
+  .cover {
+    width: inherit;
+  }
+
+  .button {
+    margin-bottom: 1rem;
   }
 }

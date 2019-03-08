@@ -7,7 +7,7 @@ function searchForm () {
   const form = element.create('form', [ 'form', 'form--search' ])
   const label = element.label('book-title', 'Zoek een titel ', 'form__label')
   const field = element.input('text', 'book-title', 'form__input', 'Titel van een boek')
-  field.value = 'Dolfje weerwolfje'
+  field.value = 'Harry potter en de steen der wijzen'
   const submit = element.input('submit', 'search-book', [ 'form__submit', 'button' ])
 
   element.appendChildren(form, [
@@ -65,6 +65,7 @@ function loader () {
 }
 
 function home () {
+  window.scrollTo(0, 0)
   const header = pageHeader('Zoek een boek')
 
   const main = element.create('main', 'main--home')
@@ -79,37 +80,54 @@ function home () {
 }
 
 function detail (data) {
+  window.scrollTo(0, 0)
   const url = window.location.href.split('#')[0]
   const header = pageHeader('Beschikbaarheid')
 
   const main = element.create('main')
   const a = element.link(`${url}#home`, 'Terug', 'button')
 
-  const div1 = element.create('div', 'row')
-  const title = element.heading('h3', 'Titel')
-  const titleContent = element.paragraph(data.search.titles['short-title']._text)
+  const container = element.create('section', 'section__book-info')
+  const containerDiv = element.create('div', 'book-info__container')
 
-  element.appendChildren(div1, [
-    title,
-    titleContent
+  const img = element.image(data.search.coverimages.coverimage[1]._text, 'cover')
+
+  const div1 = createRow('Titel', data.search.titles['short-title']._text)
+  const div2 = createRow('Auteur', data.search.authors['main-author']._text.split(',')[1] + ' ' + data.search.authors['main-author']._text.split(',')[0])
+  const div3 = createRow('Isbn', data.search.identifiers['isbn-id']._text)
+
+  let subjectString = ''
+
+  if (data.search.subjects['topical-subject'].length > 0) {
+    data.search.subjects['topical-subject'].forEach(subject => {
+      subjectString += subject._text + ', '
+    })
+  } else {
+    subjectString += data.search.subjects['topical-subject']._text + ', '
+  }
+
+  const div4 = createRow('Genres', subjectString)
+
+  const div5 = createRow('Samenvatting', data.search.summaries.summary._text)
+  element.appendChildren(containerDiv, [
+    div1,
+    div2,
+    div3,
+    div4,
+    div5
   ])
 
-  const div2 = element.create('div', 'row')
-  const author = element.heading('h3', 'Auteur')
-  const authorContent = element.paragraph(data.search.authors['main-author']._text.split(',')[1] + ' ' + data.search.authors['main-author']._text.split(',')[0])
-
-  element.appendChildren(div2, [
-    author,
-    authorContent
+  element.appendChildren(container, [
+    img,
+    containerDiv
   ])
 
   element.appendChildren(main, [
     a,
-    div1,
-    div2
+    container
   ])
 
-  console.log(data.search)
+  // console.log(data.availability)
 
   element.update(document.body, [
     header,
@@ -119,7 +137,21 @@ function detail (data) {
   initMap(data)
 }
 
+function createRow (heading, content) {
+  const div = element.create('div', 'row')
+  const title = element.heading('h3', heading)
+  const text = element.paragraph(content)
+
+  element.appendChildren(div, [
+    title,
+    text
+  ])
+
+  return div
+}
+
 function initMap (dataset) {
+  const url = window.location.href.split('#')[0]
   dataset = dataset.availability
   const coordinates = {
     lat: 52.370216,
@@ -164,6 +196,8 @@ function initMap (dataset) {
           if (location.items.item._attributes.available === 'true') string += `<p>Te vinden op de afdeling: ${location.items.item.subloc._text}</p>`
         }
 
+        string += `<p><a href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+
         marker.bindPopup(string)
       } else {
         const marker = L.marker([lat, long], { icon: helper.icon('red') })
@@ -179,6 +213,8 @@ function initMap (dataset) {
           if (location.items.item.returndate) string += `<p>Weer beschikbaar op: ${location.items.item.returndate._text}</p>`
         }
 
+        string += `<p><a href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+
         marker.bindPopup(string)
       }
     })
@@ -187,6 +223,81 @@ function initMap (dataset) {
 
     main.appendChild(p)
   }
+}
+
+function locatie (name, data) {
+  window.scrollTo(0, 0)
+  data = data.availability
+  name = name.split('-').join(' ')
+  const coordinates = {
+    lat: 52.370216,
+    long: 4.895168
+  }
+  let locatie
+
+  const header = pageHeader('Locatie info')
+  const main = element.create('main')
+  const a = element.link(`#`, 'Terug', 'button')
+  a.addEventListener('click', e => {
+    e.preventDefault()
+    window.history.back()
+  })
+
+  data.forEach(location => {
+    if (name === location._attributes.name) {
+      locatie = location
+      const div1 = createRow('Naam', location.holding._attributes.name)
+      const div2 = createRow('Adres', location.holding.address.street._text + location.holding.address.number._text)
+      const div3 = createRow('Telefoon', location.holding.address.phone._text)
+
+      const h2 = element.heading('h2', 'Openingstijden')
+      const div4 = createRow('Maandag', location.holding['opening-hours'].monday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].monday.timespan._attributes.close)
+      const div5 = createRow('Dinsdag', location.holding['opening-hours'].tuesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].tuesday.timespan._attributes.close)
+      const div6 = createRow('Woensdag', location.holding['opening-hours'].wednesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].wednesday.timespan._attributes.close)
+      const div7 = createRow('Donderdag', location.holding['opening-hours'].thursday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].thursday.timespan._attributes.close)
+      const div8 = createRow('Vrijdag', location.holding['opening-hours'].friday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].friday.timespan._attributes.close)
+      const div9 = createRow('Zaterdag', location.holding['opening-hours'].saturday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].saturday.timespan._attributes.close)
+      // const div10 = createRow('Zondag', location.holding['opening-hours'].sunday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].sunday.timespan._attributes.close)
+
+      const h22 = element.heading('h2', 'Op de kaart')
+      const div = element.create('div')
+      div.id = 'map'
+
+      element.appendChildren(main, [
+        a,
+        div1,
+        div2,
+        div3,
+        h2,
+        div4,
+        div5,
+        div6,
+        div7,
+        div8,
+        div9,
+        // div10,
+        h22,
+        div
+      ])
+    }
+  })
+
+  element.update(document.body, [
+    header,
+    main
+  ])
+
+  const map = L.map('map').setView([coordinates.lat, coordinates.long], 11)
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 13,
+    minZoom: 11
+  })
+    .addTo(map)
+
+  L.marker([locatie.holding._attributes.latitude, locatie.holding._attributes.longitude])
+    .addTo(map)
 }
 
 function error (message) {
@@ -211,5 +322,6 @@ export const render = {
   loader,
   home,
   detail,
+  locatie,
   error
 }
