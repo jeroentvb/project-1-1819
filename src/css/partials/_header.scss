@@ -2,7 +2,13 @@ header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
+  margin: -1rem 0 0 -1rem;
+  background-color: var(--color-secondary);
+  width: 100%;
+  padding: 1rem;
+  clip-path: polygon(0 0, 100% 0%, 100% 70%, 0% 100%);
+  padding-bottom: 3rem;
+  padding-top: 2rem;
 
   h1 {
     margin: 0;
