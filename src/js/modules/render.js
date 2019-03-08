@@ -7,7 +7,6 @@ function searchForm () {
   const form = element.create('form', [ 'form', 'form--search' ])
   const label = element.label('book-title', 'Zoek een titel ', 'form__label')
   const field = element.input('text', 'book-title', 'form__input', 'Titel van een boek')
-  field.value = 'Harry potter en de steen der wijzen'
   const submit = element.input('submit', 'search-book', [ 'form__submit', 'button' ])
 
   element.appendChildren(form, [
@@ -93,8 +92,8 @@ function detail (data) {
   const img = element.image(data.search.coverimages.coverimage[1]._text, 'cover')
 
   const div1 = createRow('Titel', data.search.titles['short-title']._text)
-  const div2 = createRow('Auteur', data.search.authors['main-author']._text.split(',')[1] + ' ' + data.search.authors['main-author']._text.split(',')[0])
-  const div3 = createRow('Isbn', data.search.identifiers['isbn-id']._text)
+  const div2 = createRow('Auteur', data.search.authors ? data.search.authors['main-author']._text.split(',')[1] + ' ' + data.search.authors['main-author']._text.split(',')[0] : 'Niet gevonden')
+  const div3 = createRow('Isbn', data.search.identifiers['isbn-id'] ? data.search.identifiers['isbn-id']._text : 'Niet gevonden')
 
   let subjectString = ''
 
@@ -108,7 +107,7 @@ function detail (data) {
 
   const div4 = createRow('Genres', subjectString)
 
-  const div5 = createRow('Samenvatting', data.search.summaries.summary._text)
+  const div5 = createRow('Samenvatting', data.search.summaries ? data.search.summaries.summary._text : 'Niet gevonden')
   element.appendChildren(containerDiv, [
     div1,
     div2,
