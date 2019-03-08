@@ -1,4 +1,4 @@
-/* global routie, localStorage, API */
+/* global routie, localStorage */
 
 import { API } from './modules/oba-wrapper/js/index.js'
 import { render } from './modules/render.js'
@@ -11,7 +11,7 @@ routie({
   'home': () => home(),
   'info/:frabl': frabl => detail(frabl),
   'locatie/:name': name => locatie(name),
-  '*': () => render.loader()
+  '*': () => home()
 })
 
 function home () {
