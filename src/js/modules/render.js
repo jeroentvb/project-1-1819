@@ -97,12 +97,16 @@ function detail (data) {
 
   let subjectString = ''
 
-  if (data.search.subjects['topical-subject'].length > 0) {
-    data.search.subjects['topical-subject'].forEach(subject => {
-      subjectString += subject._text + ', '
-    })
+  if (data.search.subjects) {
+    if (data.search.subjects['topical-subject'].length > 0) {
+      data.search.subjects['topical-subject'].forEach(subject => {
+        subjectString += subject._text + ', '
+      })
+    } else {
+      subjectString += data.search.subjects['topical-subject']._text + ', '
+    }
   } else {
-    subjectString += data.search.subjects['topical-subject']._text + ', '
+    subjectString = 'Niet gevonden'
   }
 
   const div4 = createRow('Genres', subjectString)
