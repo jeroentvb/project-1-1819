@@ -11,7 +11,7 @@ routie({
   'home': () => home(),
   'info/:frabl': frabl => detail(frabl),
   'locatie/:name': name => locatie(name),
-  '*': () => home()
+  '*': () => render.loader()
 })
 
 function home () {
@@ -24,10 +24,13 @@ function home () {
 
   search.submit.addEventListener('click', async e => {
     const query = search.field.value
+    const main = document.querySelector('main')
     e.preventDefault()
     search.submit.disabled = true
 
     render.loader()
+    main.classList.remove('main--home')
+    main.classList.add('main--loader')
 
     if (!query) return console.error('No query!')
 
@@ -53,11 +56,23 @@ async function available (data) {
 
   localStorage.setItem('dataset', JSON.stringify(dataset))
   if (url === window.location.href.split('#')[0] + `#info/${dataset.search.frabl._text}`) {
-    render.detail(dataset)
+    document.querySelector('.main--loader').classList.add('fadeOut')
+
+    setTimeout(() => {
+      render.detail(dataset)
+    }, 700)
   } else if (url.includes('#')) {
-    window.location.href = window.location.href.split('#')[0] + `#info/${dataset.search.frabl._text}`
+    document.querySelector('.main--loader').classList.add('fadeOut')
+
+    setTimeout(() => {
+      window.location.href = window.location.href.split('#')[0] + `#info/${dataset.search.frabl._text}`
+    }, 700)
   } else {
-    window.location.href = window.location.href + `#info/${dataset.search.frabl._text}`
+    document.querySelector('.main--loader').classList.add('fadeOut')
+
+    setTimeout(() => {
+      window.location.href = window.location.href + `#info/${dataset.search.frabl._text}`
+    }, 700)
   }
 }
 

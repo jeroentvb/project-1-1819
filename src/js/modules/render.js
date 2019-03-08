@@ -68,7 +68,7 @@ function home () {
   window.scrollTo(0, 0)
   const header = pageHeader('Zoek een boek')
 
-  const main = element.create('main', 'main--home')
+  const main = element.create('main', [ 'main', 'main--home' ])
   const form = searchForm()
 
   main.appendChild(form)
@@ -84,7 +84,7 @@ function detail (data) {
   const url = window.location.href.split('#')[0]
   const header = pageHeader('Beschikbaarheid')
 
-  const main = element.create('main')
+  const main = element.create('main', [ 'main', 'main--availability' ])
   const a = element.link(`${url}#home`, 'Terug', 'button')
 
   const container = element.create('section', 'section__book-info')
@@ -196,7 +196,8 @@ function initMap (dataset) {
           if (location.items.item._attributes.available === 'true') string += `<p>Te vinden op de afdeling: ${location.items.item.subloc._text}</p>`
         }
 
-        string += `<p><a href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+        string += `<p><a class="button" href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+        string += '<button class="button">Reserveer</button>'
 
         marker.bindPopup(string)
       } else {
@@ -213,7 +214,8 @@ function initMap (dataset) {
           if (location.items.item.returndate) string += `<p>Weer beschikbaar op: ${location.items.item.returndate._text}</p>`
         }
 
-        string += `<p><a href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+        string += `<p><a class="button" href="${url}#locatie/${location._attributes.name.split(' ').join('-')}">Openingstijden</a></p>`
+        string += '<button class="button">Reserveer</button>'
 
         marker.bindPopup(string)
       }
@@ -236,7 +238,7 @@ function locatie (name, data) {
   let locatie
 
   const header = pageHeader('Locatie info')
-  const main = element.create('main')
+  const main = element.create('main', [ 'main', 'main--location' ])
   const a = element.link(`#`, 'Terug', 'button')
   a.addEventListener('click', e => {
     e.preventDefault()
@@ -251,13 +253,15 @@ function locatie (name, data) {
       const div3 = createRow('Telefoon', location.holding.address.phone._text)
 
       const h2 = element.heading('h2', 'Openingstijden')
-      const div4 = createRow('Maandag', location.holding['opening-hours'].monday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].monday.timespan._attributes.close)
-      const div5 = createRow('Dinsdag', location.holding['opening-hours'].tuesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].tuesday.timespan._attributes.close)
-      const div6 = createRow('Woensdag', location.holding['opening-hours'].wednesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].wednesday.timespan._attributes.close)
-      const div7 = createRow('Donderdag', location.holding['opening-hours'].thursday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].thursday.timespan._attributes.close)
-      const div8 = createRow('Vrijdag', location.holding['opening-hours'].friday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].friday.timespan._attributes.close)
-      const div9 = createRow('Zaterdag', location.holding['opening-hours'].saturday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].saturday.timespan._attributes.close)
-      // const div10 = createRow('Zondag', location.holding['opening-hours'].sunday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].sunday.timespan._attributes.close)
+      console.log(location.holding)
+
+      const div4 = createRow('Maandag', location.holding['opening-hours'].monday.timespan ? location.holding['opening-hours'].monday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].monday.timespan._attributes.close : 'Niet beschikbaar')
+      const div5 = createRow('Dinsdag', location.holding['opening-hours'].tuesday.timespan ? location.holding['opening-hours'].tuesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].tuesday.timespan._attributes.close : 'Niet beschikbaar')
+      const div6 = createRow('Woensdag', location.holding['opening-hours'].wednesday.timespan ? location.holding['opening-hours'].wednesday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].wednesday.timespan._attributes.close : 'Niet beschikbaar')
+      const div7 = createRow('Donderdag', location.holding['opening-hours'].thursday.timespan ? location.holding['opening-hours'].thursday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].thursday.timespan._attributes.close : 'Niet beschikbaar')
+      const div8 = createRow('Vrijdag', location.holding['opening-hours'].friday.timespan ? location.holding['opening-hours'].friday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].friday.timespan._attributes.close : 'Niet beschikbaar')
+      const div9 = createRow('Zaterdag', location.holding['opening-hours'].saturday.timespan ? location.holding['opening-hours'].saturday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].saturday.timespan._attributes.close : 'Niet beschikbaar')
+      const div10 = createRow('Zondag', location.holding['opening-hours'].sunday.timespan ? location.holding['opening-hours'].sunday.timespan._attributes.open + ' - ' + location.holding['opening-hours'].sunday.timespan._attributes.close : 'Niet beschikbaar')
 
       const h22 = element.heading('h2', 'Op de kaart')
       const div = element.create('div')
@@ -275,7 +279,7 @@ function locatie (name, data) {
         div7,
         div8,
         div9,
-        // div10,
+        div10,
         h22,
         div
       ])
@@ -296,7 +300,7 @@ function locatie (name, data) {
   })
     .addTo(map)
 
-  L.marker([locatie.holding._attributes.latitude, locatie.holding._attributes.longitude])
+  L.marker([locatie.holding._attributes.latitude, locatie.holding._attributes.longitude], { icon: helper.icon('black') })
     .addTo(map)
 }
 

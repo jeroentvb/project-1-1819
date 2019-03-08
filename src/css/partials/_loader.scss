@@ -49,6 +49,19 @@
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut .8s linear forwards;
+}
+
 @mixin loading($animation) {
   animation: $animation 2s infinite ease-in-out forwards;
 }
